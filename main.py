@@ -31,6 +31,7 @@ def create_ball(radious, pos):
     body.position = pos
     shape = pymunk.Circle(body, radious)
     shape.mass = 5
+    shape.elasticity = 0.8
     # use pivot join to add friction
     pivot = pymunk.PivotJoint(static_body, body, (0,0), (0,0))
     pivot.max_bias = 0 # disable joint correction
@@ -41,6 +42,25 @@ def create_ball(radious, pos):
 
 new_ball = create_ball(25, (300, 300))
 cue_ball = create_ball(25, (310, 700))
+
+# create field cushions
+cushions = [
+    [(24,60), (572,60), (565,67), (32,67)],
+    [(24,60), (24,839), (32,832), (32,67)],
+    [(32,832), (565,832), (572,839), (24,839)],
+    [(565,67), (565,832), (572,839), (572,60)],
+]
+
+# function for creating cushions
+def create_cushion(poly_dims):
+    body = pymunk.Body(body_type=pymunk.Body.STATIC)
+    body.position = ((0,0))
+    shape = pymunk.Poly(body, poly_dims)
+    shape.elasticity = 0.8
+    space.add(body, shape)
+
+for c in cushions:
+    create_cushion(c)
 
 # Game Loop
 running = True
