@@ -20,7 +20,7 @@ icon = pygame.image.load('Images/copa-mundial.png')
 pygame.display.set_icon(icon)
 
 # Background
-background = pygame.image.load("Images/field.jpg")
+background = pygame.image.load("Images/field2.jpg")
 
 # pymunk space
 space = pymunk.Space()
