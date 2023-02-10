@@ -2,6 +2,12 @@ import pygame
 import pymunk
 import pymunk.pygame_util
 
+# Sonido
+pygame.mixer.init()
+sonido_fondo = pygame.mixer.Sound("sound/fans.mp3")
+pygame.mixer.Sound.play(sonido_fondo,-1)
+
+
 # Initialize the gygame
 pygame.init()
 
