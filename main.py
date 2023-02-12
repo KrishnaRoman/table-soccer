@@ -1,6 +1,7 @@
 import pygame
 import pymunk
 import pymunk.pygame_util
+import math
 
 # Sonido
 pygame.mixer.init()
@@ -12,7 +13,7 @@ pygame.mixer.Sound.play(sonido_fondo,-1)
 pygame.init()
 
 # Create the screen
-screen = pygame.display.set_mode((600,900))
+screen = pygame.display.set_mode((700,900))
 
 # Title and Icon
 pygame.display.set_caption("Table Soccer")
@@ -20,7 +21,7 @@ icon = pygame.image.load('Images/copa-mundial.png')
 pygame.display.set_icon(icon)
 
 # Background
-background = pygame.image.load("Images/field2.jpg")
+background = pygame.image.load("Images/field2.png")
 
 # pymunk space
 space = pymunk.Space()
@@ -33,6 +34,8 @@ FPS = 120
 
 # game variables
 dia = 52
+force = 2000
+
 team1_image = pygame.image.load('Images/argentina52.png')
 team1_image2 = pygame.image.load('Images/argentina.png')
 team2_image = pygame.image.load('Images/brazil52.png')
@@ -40,13 +43,13 @@ team2_image2 = pygame.image.load('Images/brazil.png')
 
 # Teams' players coordinates
 coord_1 = [
-    (300,99), (150,225), (300, 200),
-    (450,225), (225,350), (375,350)
+    (349,101), (199,227), (349, 202),
+    (499,227), (274,352), (424,352)
 ]
 
 coord_2 = [
-    (300,800), (150, 675), (300,700),
-    (450,675), (225,550), (375,550)
+    (349,802), (199, 677), (349,702),
+    (499,677), (274,552), (424,552)
 ]
 
 # funcion for creating balls
@@ -78,10 +81,10 @@ for i in range(1,6):
 
 # create field cushions
 cushions = [
-    [(73,60), (100,60), (614,67), (81,67)],
-    [(73,60), (73,839), (81,832), (81,67)],
-    [(81,832), (614,832), (622,839), (73,839)],
-    [(614,67), (614,832), (622,839), (622,60)],
+    [(73,62), (623,62), (614,69), (81,69)],
+    [(73,62), (73,841), (81,834), (81,69)],
+    [(81,834), (614,834), (622,841), (73,841)],
+    [(614,69), (614,834), (622,841), (622,62)],
 ]
 
 # function for creating cushions
@@ -125,11 +128,19 @@ while running:
     for player in team_2[1:]:
         screen.blit(team2_image, (player.body.position[0] - player.radius,
                                     player.body.position[1] - player.radius))
+    
+    # calculate shot angle
+    mouse_pos = pygame.mouse.get_pos()
+    x_dist = team_2[0].body.position[0] - mouse_pos[0]
+    y_dist = -(team_2[0].body.position[1] - mouse_pos[1])
+    angle = math.degrees(math.atan2(y_dist, x_dist))
 
     # Event handler
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
-            team_2[0].body.apply_impulse_at_local_point((150, -1500), (0, 0))
+            x_impulse = math.cos(math.radians(angle))
+            y_impulse = math.sin(math.radians(angle))
+            team_2[0].body.apply_impulse_at_local_point((force * - x_impulse, force * y_impulse), (0, 0))
         if event.type == pygame.QUIT:
             running = False
 
