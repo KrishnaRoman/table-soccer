@@ -41,15 +41,37 @@ team1_image2 = pygame.image.load('Images/argentina.png')
 team2_image = pygame.image.load('Images/brazil52.png')
 team2_image2 = pygame.image.load('Images/brazil.png')
 
-# Teams' players coordinates
+# Teams' players default coordinates
+# Player 1
 coord_1 = [
     (349,101), (199,227), (349, 202),
     (499,227), (274,352), (424,352)
 ]
 
+coord_offensive_1 = [
+    (349,101), (349,302), (399,227),
+    (249,352), (449,352), (299,227)
+]
+
+coord_deffensive_1 = [
+    (349,101), (199,227), (300,202),
+    (499,227), (349,352), (400,202)
+]
+
+# Player 2
 coord_2 = [
     (349,802), (199, 677), (349,702),
     (499,677), (274,552), (424,552)
+]
+
+coord_offensive_2 = [
+    (349,802), (299,702), (399,702),
+    (449,552), (249,552), (349,601)
+]
+
+coord_deffensive_2 = [
+    (349,802), (199,677), (300,702),
+    (499,677), (400,702), (349,552)
 ]
 
 # funcion for creating balls
